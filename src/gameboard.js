@@ -1,12 +1,6 @@
-import { shipFactory, hit, isSunk } from "./ship-factory";
+import { shipFactory, hit, isSunk, rotateShip } from "./ship-factory";
 
 let allShips = [];
-// const carrier = shipFactory("carrier", 5);
-// const battleship = shipFactory("battleship", 4);
-// const cruiser = shipFactory("cruiser", 3);
-// const submarine = shipFactory("submarine", 3);
-// const destroyer = shipFactory("destroyer", 2);
-// allShips.push(carrier, battleship, cruiser, submarine, destroyer);
 
 const gameboard = () => {
   let board = [];
@@ -19,7 +13,22 @@ const gameboard = () => {
   return board;
 };
 
-// let board = gameboard();
+function populateBoard() {
+  let board = gameboard();
+  const carrier = shipFactory("carrier", 5);
+  const battleship = shipFactory("battleship", 4);
+  const cruiser = shipFactory("cruiser", 3);
+  const submarine = shipFactory("submarine", 3);
+  const destroyer = shipFactory("destroyer", 2);
+  placeShip(4, 3, carrier, board);
+  placeShip(0, 0, battleship, board);
+  rotateShip(cruiser);
+  placeShip(7, 5, cruiser, board);
+  rotateShip(submarine);
+  placeShip(1, 6, submarine, board);
+  placeShip(4, 7, destroyer, board);
+  allShips.push(carrier, battleship, cruiser, submarine, destroyer);
+}
 
 function placeShip(x, y, ship, board) {
   if (
@@ -34,7 +43,6 @@ function placeShip(x, y, ship, board) {
   } else if (ship.direction === "vertical") {
     placeVerticalShip(x, y, ship, board);
   }
-  //   allShips.push(ship);
   return board;
 }
 
@@ -63,7 +71,8 @@ function addShip(ship) {
 
 function receiveAttack(x, y, board) {
   if (board[x * 10 + y] === "missed") return board;
-  if (board[x * 10 + y] !== null) {
+  if (board[x * 10 + y] !== null && board[x * 10 + y].index !== "hit") {
+    board[x * 10 + y].index = "hit";
     hit(board[x * 10 + y].ship);
   } else if (board[x * 10 + y] == null) {
     board[x * 10 + y] = "missed";
@@ -85,10 +94,17 @@ function shipsSunk() {
   return allShipsSunk;
 }
 
-function checkShipStatus(ship) {
-  if (ship.sunk === true) {
-    return ship.sunk;
-  } else return;
-}
+// function checkShipStatus(ship) {
+//   if (ship.sunk === true) {
+//     return ship.sunk;
+//   } else return;
+// }
 
-export { gameboard, placeShip, receiveAttack, shipsSunk, addShip };
+export {
+  gameboard,
+  placeShip,
+  receiveAttack,
+  shipsSunk,
+  addShip,
+  populateBoard,
+};
