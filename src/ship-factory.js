@@ -1,12 +1,14 @@
-const shipFactory = (length) => {
+const shipFactory = (name, length) => {
   let timesHit = 0;
   let sunk = false;
+  let direction = "horizontal";
 
-  return { length, timesHit, sunk };
+  return { name, length, direction, timesHit, sunk };
 };
 
 function hit(ship) {
   ship.timesHit += 1;
+  isSunk(ship);
   return ship;
 }
 
@@ -19,4 +21,13 @@ function isSunk(ship) {
   return ship;
 }
 
-export { shipFactory, hit, isSunk };
+function rotateShip(ship) {
+  if (ship.direction === "horizontal") {
+    ship.direction = "vertical";
+  } else {
+    ship.direction = "horizontal";
+  }
+  return ship;
+}
+
+export { shipFactory, hit, isSunk, rotateShip };
