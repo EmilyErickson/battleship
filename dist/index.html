@@ -8,9 +8,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <button class="btn">Click me</button>
-    Testing
-    
+    <div class="gameboard-container ships">
+        <div class="textbox">Please place your ships. Use the red box to drag ships</div>
+        <div class="player-wrapper"><div class="player-gameboard gameboard"></div></div>
+        <div class="enemy-wrapper"><div class="enemy-gameboard gameboard"></div></div>
+        <div class="ship-wrapper"><div class="player-ships">
+            <div id="ship" class="carrier" draggable="true"><div class="drag-box"></div></div>
+            <div id="ship" class="battleship" draggable="true"><div class="drag-box"></div></div>
+            <div id="ship" class="cruiser" draggable="true"><div class="drag-box"></div></div>
+            <div id="ship" class="submarine" draggable="true"><div class="drag-box"></div></div>
+            <div id="ship" class="destroyer" draggable="true"><div class="drag-box"></div></div>
+            <button class="rotate-ships">Rotate Ships</button>
+    </div></div>
+    </div>    
 </body>
 <script src="main.js"></script>
 </html>
