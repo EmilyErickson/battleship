@@ -5,6 +5,7 @@ import {
   shipsSunk,
   addShip,
 } from "../gameboard";
+import { Player } from "../player";
 import { shipFactory, rotateShip } from "../ship-factory";
 
 test("create gameboard", () => {
@@ -37,7 +38,7 @@ test("receiveAttack that hits a ship", () => {
   let board = gameboard();
   let submarine = shipFactory("submarine", 3);
   placeShip(3, 4, submarine, board);
-  receiveAttack(3, 4, board);
+  receiveAttack(34, board);
   expect(submarine.timesHit).toBe(1);
 });
 
@@ -45,17 +46,19 @@ test("receiveAttack that misses ships", () => {
   let board = gameboard();
   let submarine = shipFactory("submarine", 3);
   placeShip(2, 3, submarine, board);
-  receiveAttack(5, 6, board);
-  expect(receiveAttack(5, 6, board)[56]).toBe("missed");
+  receiveAttack(56, board);
+  expect(receiveAttack(56, board)[56]).toBe("missed");
 });
 
 test("all ships sunk", () => {
+  // let player = Player()
   let board = gameboard();
+  let allPlayerShips = [];
   let cruiser = shipFactory("cruiser", 3);
   placeShip(2, 3, cruiser, board);
-  addShip(cruiser);
-  receiveAttack(2, 3, board);
-  receiveAttack(2, 4, board);
-  receiveAttack(2, 5, board);
-  expect(shipsSunk()).toBe(true);
+  addShip(cruiser, allPlayerShips);
+  receiveAttack(23, board);
+  receiveAttack(24, board);
+  receiveAttack(25, board);
+  expect(shipsSunk(allPlayerShips)).toBe(true);
 });
