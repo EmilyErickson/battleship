@@ -1,6 +1,216 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: rgb(163, 203, 237);
-    color: red;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    display: grid;
+    place-content: center;
+}
+
+.gameboard-container {
+    display: grid;
+    grid: "text  text" .2fr
+          "player enemy" 1fr /
+           1fr 1fr;
+    place-items: center;
+    width: 96vw;
+    height: 96vh;
+    background-color: rgb(138, 138, 141);
+    border: 2px solid black;
+    overflow: scroll;
+}
+.gameboard-container.ships {
+    display: grid;
+    grid: "text  text" .2fr
+          "player ships" 1fr /
+           1fr 1fr;
+}
+
+
+.player-wrapper {
+    width: 98%;
+    height: 0;
+    padding-top: min(400px, 98%);
+    max-width: 400px;
+    grid-area: player;
+    position: relative;
+}  
+.enemy-wrapper {
+    width: 98%;
+    height: 0;
+    padding-top: min(400px, 98%);
+    max-width: 400px;
+    grid-area: enemy;
+    position: relative;
+}  
+
+.ship-wrapper{
+    /* display: none; */
+    grid-area: ships;
+    border: 2px solid rebeccapurple;
+    width: 98%;
+    height: 0;
+    padding-top: min(500px, 125%);
+    max-width: 400px;
+    position: relative;
+}
+
+.textbox {
+    height: 98%;
+    width: 95%;
+    display: grid;
+    place-content: center;
+    grid-area: text;
+    border: 2px dashed salmon;
+}
+
+
+.gameboard {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(17, 60, 131);
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    width: 100%;
+    height: 100%;
+    box-shadow: 3px 3px 2px rgba(84, 117, 143, 0.2);
+}
+
+.player-gameboard{
+    border: 1px solid rgb(255, 0, 0);
+}
+
+.enemy-gameboard{
+    border: 1px solid rgb(255, 8, 255);
+}
+
+.cell {
+    box-sizing: border-box;
+    border: .75px solid rgb(202, 202, 202);
+    box-shadow: inset .5px -2px 3px .5px rgb(3, 25, 60);
+}
+
+.missed{
+    box-shadow: inset .5px -2px 3px .5px rgb(69, 69, 69);
+    background-color: rgb(241, 241, 241);
+}
+
+.hit, .cell.ship.hit {
+    box-shadow: inset .5px -2px 3px .5px rgb(64, 0, 0);
+    background-color: rgb(200, 32, 32);
+}
+
+.cell.ship {
+    background-color: rgb(127, 127, 125);
+    box-shadow: inset .5px -2px 3px .5px black;
+}
+
+/* Ship container styles */
+
+.player-ships{
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(17, 61, 131, 0.351);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.player-ships.vertical {
+    display: grid;
+    grid: "ship1 ship2 ship3 ship4" 2fr
+          "btn btn btn ship5" 1fr /
+          1fr 1fr 1fr 1fr;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed rgb(36, 0, 122);
+}
+
+
+.player-ships.vertical > #ship {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 35%;
+}
+
+
+#ship {
+    background-color: rgb(127, 127, 125);
+    display: flex;
+    justify-content: left;
+}
+
+.carrier {
+    width: 49%;
+    height: 7.8%;
+}
+.battleship {
+    width: 39%;
+    height: 7.8%;
+}
+.cruiser {
+    width: 29%;
+    height: 7.8%;
+}
+.submarine {
+    width: 29%;
+    height: 7.8%;
+}
+.destroyer {
+    height: 7.8%;
+    width: 19%;
+}
+
+.vertical > .carrier{
+    height: 58%;
+    grid-area: ship1;
+}
+.vertical > .battleship {
+    height: 46%;
+    grid-area: ship2;
+}
+.vertical > .cruiser {
+    height: 34%;
+    grid-area: ship3;
+}
+.vertical > .submarine {
+    height: 34%;
+    grid-area: ship4;
+}
+.vertical > .destroyer {
+    height: 46%;
+    grid-area: ship5;
+}
+
+.drag-box {
+    width: 10px;
+    background-color: red;
+}
+
+.vertical > #ship > .drag-box {
+    height: 10px;
+    width: 100%;
+    background-color: red;
+}
+
+
+.rotate-ships {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 15px;
+    grid-area: btn;
+    width: 125px;
+    height: 30px;
 }
