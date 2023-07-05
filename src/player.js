@@ -1,21 +1,39 @@
+import { player } from ".";
 import { receiveAttack } from "./gameboard";
-import { populateBoard } from "./gameboard";
 
-function setUpBoard() {
-  populateBoard();
+class Player {
+  constructor(name, board) {
+    this.name = name;
+    this.board = board;
+    this.allShips = [];
+  }
 }
 
-function attackEnemy(x, y, enemyBoard) {
-  if (x * 10 + y <= 100) {
-    return receiveAttack(x, y, enemyBoard);
+function attackEnemy(i, enemyBoard) {
+  if (i < 100) {
+    return receiveAttack(i, enemyBoard);
   } else return enemyBoard;
 }
 
 function computerMove(playerBoard) {
-  let randomX = Math.floor(Math.random() * 10);
-  let randomY = Math.floor(Math.random() * 10);
-  attackEnemy(randomX, randomY, playerBoard);
-  console.log(attackEnemy(randomX, randomY, playerBoard));
+  let random = getRandomIndex(playerBoard);
+  attackEnemy(random, playerBoard);
+  return random;
 }
 
-export { attackEnemy, setUpBoard, computerMove };
+function getRandomIndex(board, num = null) {
+  let random = Math.floor(Math.random() * 100);
+  if (num !== null) {
+    random = num + 1;
+  }
+  if (board[random].index === "hit") {
+    console.log(board[random].index);
+    return getRandomIndex(board, random);
+  }
+  if (board[random].index === "missed") {
+    return getRandomIndex(board);
+  }
+  return random;
+}
+
+export { attackEnemy, computerMove, Player };

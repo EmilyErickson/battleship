@@ -29,5 +29,4 @@ function rotateShip(ship) {
   }
   return ship;
 }
-
 export { shipFactory, hit, isSunk, rotateShip };
