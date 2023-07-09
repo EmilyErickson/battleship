@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "watch": "jest --watch *.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,11 @@
   },
   "homepage": "https://github.com/EmilyErickson/battleship#readme",
   "devDependencies": {
+    "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",
+    "babel-loader": "^9.1.2",
     "jest": "^29.5.0",
-    "webpack": "^5.82.1",
+    "webpack": "^5.83.1",
     "webpack-cli": "^5.1.1"
   }
 }
