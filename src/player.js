@@ -1,4 +1,3 @@
-import { player } from ".";
 import { receiveAttack } from "./gameboard";
 
 class Player {
@@ -27,7 +26,6 @@ function getRandomIndex(board, num = null) {
     random = num + 1;
   }
   if (board[random].index === "hit") {
-    console.log(board[random].index);
     return getRandomIndex(board, random);
   }
   if (board[random].index === "missed") {
