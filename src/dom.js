@@ -43,7 +43,6 @@ function rotateShips(e) {
 }
 
 function dragStart(e) {
-  //   e.preventDefault();
   currentShip = e.target;
 }
 function dragEnd(e) {
@@ -97,7 +96,6 @@ function startGame() {
   if (shipContainer.children.length === 1) {
     gameContainer.classList.remove("ships");
     gameContainer.removeChild(shipWrapper);
-    textBox.textContent = "Your turn";
   }
 }
 
@@ -110,7 +108,7 @@ function createEnemyBoard(boardUser) {
     cell.classList.add("cell");
     cell.addEventListener("click", () => {
       if (gameOver() === true) {
-        alert("Game Over");
+        updateTextbox("game over", player);
         return;
       }
       if (playerTurn !== true) {
@@ -176,22 +174,64 @@ function handleGameboardClick(i, boardUser) {
     boardUser.board[i].index !== "hit"
   ) {
     receiveAttack(i, boardUser.board);
-    setTimeout(() => {
-      let playerTurn = false;
-      gameLoop(playerTurn);
-    }, 15);
+    let playerTurn = false;
+    gameLoop(playerTurn);
   } else {
-    alert("Please choose a valid cell");
+    updateTextbox("invalid cell", player);
   }
+}
+
+function updateTextbox(message, player) {
+  if (player.name !== "player") {
+    return;
+  }
+
+  switch (message) {
+    case "game over":
+      textBox.classList.add("game-over");
+      break;
+    case "player win":
+      gameContainer.classList.add("winner");
+      textBox.classList.add("game-over");
+      textBox.textContent = "YOU WIN!! GAME OVER!";
+      break;
+    case "enemy win":
+      gameContainer.classList.add("winner");
+      textBox.classList.add("game-over");
+      textBox.textContent = "Computer Wins! GAME OVER!";
+      break;
+    case "ship error":
+      textBox.classList.add("error");
+      textBox.textContent = "Ships can't overlap or run off the board!";
+      setTimeout(textBoxDefault, 2000);
+      break;
+    case "invalid cell":
+      textBox.classList.add("error");
+      textBox.textContent = "Please choose a valid cell";
+      setTimeout(textBoxDefault, 1200);
+      break;
+    default:
+      textBox.classList.remove("error");
+      textBox.textContent = "Select a cell on the enemy board";
+  }
+}
+
+function textBoxDefault() {
+  textBox.classList.remove("error");
+  if (shipContainer.children.length > 1) {
+    textBox.textContent = "Use the red box to drag and place ships.";
+    return;
+  }
+  textBox.textContent = "Select a cell on the enemy board";
 }
 
 export {
   createPlayerBoard,
   createEnemyBoard,
   updateBoardDisplay,
-  playerTurn,
   displayShips,
   dragOver,
   dragDrop,
   removeShip,
+  updateTextbox,
 };
