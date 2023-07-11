@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Neucha&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -5,27 +7,43 @@ body {
     color: black;
     display: grid;
     place-content: center;
+    font-family: "Neucha", "Monomaniac One", Courier, monospace;
+}
+
+.gameboard-container.winner {
+    background: linear-gradient(0.3turn, rgb(200, 32, 32), #ffffff, rgb(0, 81, 212));
 }
 
 .gameboard-container {
     display: grid;
-    grid: "text  text" .2fr
+    grid: "header header" .3fr
+          "text  text" .15fr
           "player enemy" 1fr /
            1fr 1fr;
     place-items: center;
-    width: 96vw;
-    height: 96vh;
-    background-color: rgb(138, 138, 141);
+    width: 98vw;
+    height: 98vh;
+    background: linear-gradient(0.15turn, #585858, #9f9f9f, #585858);    
     border: 2px solid black;
     overflow: scroll;
 }
 .gameboard-container.ships {
     display: grid;
-    grid: "text  text" .2fr
+    grid: "header header" .3fr
+          "text  text" .15fr
           "player ships" 1fr /
            1fr 1fr;
 }
 
+.header {
+    grid-area: header;
+    font-size: 3rem;
+    text-shadow: 3px 3px 2px rgba(58, 58, 58, 0.424);
+    letter-spacing: 4px;
+    height: 75%;
+    display: grid;
+    place-content: center;
+}
 
 .player-wrapper {
     width: 98%;
@@ -45,23 +63,35 @@ body {
 }  
 
 .ship-wrapper{
-    /* display: none; */
     grid-area: ships;
-    border: 2px solid rebeccapurple;
+    border: .5px solid rgb(0, 0, 0);
     width: 98%;
     height: 0;
-    padding-top: min(500px, 125%);
+    padding-top: min(500px, 120%);
     max-width: 400px;
     position: relative;
 }
 
 .textbox {
     height: 98%;
-    width: 95%;
+    width: 75%;
     display: grid;
     place-content: center;
     grid-area: text;
-    border: 2px dashed salmon;
+    font-size: 1.75rem;
+    letter-spacing: 1.2px;
+    text-shadow: 3px 2px 2px rgba(33, 33, 33, 0.559);
+}
+
+.textbox.error {
+    text-shadow: -2px 2px 5px red, 2px 2px 5px red, 2px -2px 5px red, -2px -2px 5px red;
+}
+
+.textbox.game-over {
+    text-shadow: -2px 2px 5px rgb(255, 255, 255), 
+                2px 2px 5px rgb(255, 255, 255), 
+                2px -2px 5px rgb(255, 255, 255), 
+                -2px -2px 5px rgb(255, 255, 255);
 }
 
 
@@ -79,17 +109,13 @@ body {
     box-shadow: 3px 3px 2px rgba(84, 117, 143, 0.2);
 }
 
-.player-gameboard{
-    border: 1px solid rgb(255, 0, 0);
-}
-
-.enemy-gameboard{
-    border: 1px solid rgb(255, 8, 255);
+.player-gameboard, .enemy-gameboard{
+    border: .5px solid rgb(202, 202, 202);
 }
 
 .cell {
     box-sizing: border-box;
-    border: .75px solid rgb(202, 202, 202);
+    border: .5px solid rgb(202, 202, 202);
     box-shadow: inset .5px -2px 3px .5px rgb(3, 25, 60);
 }
 
@@ -115,7 +141,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(17, 61, 131, 0.351);
+    background-color: rgb(179, 179, 179);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -132,7 +158,6 @@ body {
     place-items: center;
     width: 100%;
     height: 100%;
-    border: 2px dashed rgb(36, 0, 122);
 }
 
 
@@ -172,23 +197,23 @@ body {
 }
 
 .vertical > .carrier{
-    height: 58%;
+    height: 59%;
     grid-area: ship1;
 }
 .vertical > .battleship {
-    height: 46%;
+    height: 47%;
     grid-area: ship2;
 }
 .vertical > .cruiser {
-    height: 34%;
+    height: 35%;
     grid-area: ship3;
 }
 .vertical > .submarine {
-    height: 34%;
+    height: 35%;
     grid-area: ship4;
 }
 .vertical > .destroyer {
-    height: 46%;
+    height: 47%;
     grid-area: ship5;
 }
 
@@ -205,9 +230,9 @@ body {
 
 
 .rotate-ships {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.712);
     color: rgb(0, 0, 0);
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 8px;
     font-size: 15px;
     grid-area: btn;
