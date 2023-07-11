@@ -1,25 +1,17 @@
-import {
-  gameboard,
-  placeShip,
-  receiveAttack,
-  shipsSunk,
-  addShip,
-} from "../gameboard";
-import { Player } from "../player";
+import { gameboard } from "../gameboard";
 import { shipFactory, rotateShip } from "../ship-factory";
 
-test("create gameboard", () => {
-  let board = gameboard();
-  expect(board[25]).toBe(null);
+test("create empty gameboard", () => {
+  expect(gameboard[2]).toBe({ index: null });
 });
 
 test("rejects ship placed over another ship", () => {
   let board = gameboard();
   let battleship = shipFactory("battleship", 4);
   let submarine = shipFactory("submarine", 3);
-  placeShip(0, 0, battleship, board);
-  placeShip(0, 0, submarine, board);
-  expect(placeShip(0, 0, battleship, board)[2]).toStrictEqual({
+  placeShip(12, battleship, board);
+  placeShip(12, submarine, board);
+  expect(placeShip(12, battleship, board)[2]).toStrictEqual({
     ship: battleship,
     index: 2,
   });
@@ -51,7 +43,6 @@ test("receiveAttack that misses ships", () => {
 });
 
 test("all ships sunk", () => {
-  // let player = Player()
   let board = gameboard();
   let allPlayerShips = [];
   let cruiser = shipFactory("cruiser", 3);
