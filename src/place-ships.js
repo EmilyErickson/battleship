@@ -1,5 +1,5 @@
 import { rotateShip } from "./ship-factory";
-import { removeShip } from "./dom";
+import { removeShip, updateTextbox } from "./dom";
 import { addShip } from "./gameboard";
 
 function placeShip(ind, ship, player) {
@@ -20,15 +20,20 @@ function placeShip(ind, ship, player) {
 function preventWrapping(index, ship, player) {
   if (ship.direction === "horizontal") {
     let num = index + ship.length - 1;
-    if (index.toString()[1] == undefined && num < 10) {
+    if (
+      (index.toString()[1] == undefined && num < 10) ||
+      num.toString()[0] === index.toString()[0]
+    ) {
+      for (let i = 0; i < ship.length; i++) {
+        let ind = index + i;
+        if (player.board[ind].index !== null) {
+          updateTextbox("ship error", player);
+          return false;
+        }
+      }
       return true;
     }
-    if (num.toString()[0] === index.toString()[0]) {
-      return true;
-    }
-    if (player.name === "player") {
-      alert("Ships can't wrap to the next line");
-    }
+    updateTextbox("ship error", player);
     return false;
   }
   if (ship.direction === "vertical") {
@@ -37,11 +42,16 @@ function preventWrapping(index, ship, player) {
     }
     let num = parseInt(index.toString()[0]) + ship.length;
     if (num <= 10) {
+      for (let i = 0; i < ship.length * 10; i += 10) {
+        let ind = parseInt(index) + i;
+        if (player.board[ind].index !== null) {
+          updateTextbox("ship error", player);
+          return false;
+        }
+      }
       return true;
     }
-    if (player.name === "player") {
-      alert("Ships can't run off the board");
-    }
+    updateTextbox("ship error", player);
     return false;
   }
 }
@@ -76,22 +86,16 @@ function placeComputerShip(ship, player) {
   let random = getRandom();
   let boolean = randomBoolean();
   if (boolean === true) {
-    let num = parseInt(random.toString()[0]) + ship.length;
-    if (num > 10) {
+    rotateShip(ship);
+    let valid = preventWrapping(random, ship, player);
+    if (valid !== true) {
       return placeComputerShip(ship, player);
     }
-    rotateShip(ship);
     placeShip(random, ship, player);
   } else if (boolean === false) {
-    let num = random + ship.length;
-    if (num.toString()[0] !== random.toString()[0]) {
+    let valid = preventWrapping(random, ship, player);
+    if (valid !== true) {
       return placeComputerShip(ship, player);
-    }
-    for (let i = 0; i < ship.length; i++) {
-      let index = random + i;
-      if (player.board[index].index !== null) {
-        return placeComputerShip(ship, player);
-      }
     }
     placeShip(random, ship, player);
   }
