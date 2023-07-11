@@ -1,7 +1,7 @@
 import { hit, shipFactory } from "./ship-factory";
 import { player, enemy } from ".";
-import { removeShip } from "./dom";
 import { placeComputerShip } from "./place-ships";
+import { updateTextbox } from "./dom";
 
 const gameboard = () => {
   let board = [];
@@ -47,7 +47,12 @@ function shipsSunk(allPlayerShips) {
 function gameOver() {
   let playerSunk = shipsSunk(player.allShips);
   let enemySunk = shipsSunk(enemy.allShips);
-  if (playerSunk || enemySunk) {
+  if (playerSunk === true) {
+    updateTextbox("enemy win", player);
+    return true;
+  }
+  if (enemySunk === true) {
+    updateTextbox("player win", player);
     return true;
   }
 }
