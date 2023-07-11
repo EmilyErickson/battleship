@@ -11,16 +11,13 @@ let playerTurn = true;
 
 function gameLoop(playerTurn) {
   if (gameOver() === true) {
-    alert("Game Over");
     return;
   }
   if (playerTurn === false) {
     let cellIndex = computerMove(player.board);
     updateBoardDisplay(cellIndex, player);
     playerTurn = true;
-    setTimeout(() => {
-      gameLoop(playerTurn);
-    }, 50);
+    gameLoop(playerTurn);
   }
   return playerTurn;
 }
